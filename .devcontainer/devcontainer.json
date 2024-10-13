@@ -1,0 +1,43 @@
+{
+	"build": {
+		"dockerfile": "../Dockerfile",
+		"args": {
+			"USER_NAME" : "${localEnv:USER}"
+		}
+	},
+	"name": "dev-legged_control",
+	"mounts": [
+		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
+	],
+	
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USER}/LeggedRobotics_ws/src/legged_control,type=bind",
+	"workspaceFolder": "/home/${localEnv:USER}/LeggedRobotics_ws/src/legged_control",
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}"
+	},
+	"runArgs": [
+		"--name", "dev-legged_control",
+		"--cap-add=SYS_PTRACE",	
+		"--net=host",
+		"--privileged",
+		"--security-opt=seccomp=unconfined"
+	],
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"editor.detectIndentation": false,
+				"editor.insertSpaces": false,
+				"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+			},
+			"extensions": [
+				"twxs.cmake",
+				"ms-iot.vscode-ros",
+				"xaver.clang-format",
+				"ms-vscode-remote.vscode-remote-extensionpack",
+				"ms-vscode.cpptools-extension-pack",
+				"mhutchie.git-graph",
+				"donjayamanne.githistory"
+			]
+		}
+	}
+}
